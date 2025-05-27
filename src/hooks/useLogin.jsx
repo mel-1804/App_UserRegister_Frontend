@@ -14,12 +14,11 @@ export function useLogin() {
       });
 
       const data = await response.json();
-      console.log("Respuesta del backend:", data);
+
       if (data.access_token && data.user) {
-        console.log("Usuario autenticado:", data.user);
         // Saving user data in localStorage
         localStorage.setItem("user", JSON.stringify(data.user));
-        localStorage.setItem("token", data.token);
+        localStorage.setItem("token", data.access_token);
         navigate("/home");
         return { success: true };
       } else {
