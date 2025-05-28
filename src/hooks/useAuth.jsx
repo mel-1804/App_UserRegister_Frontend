@@ -16,13 +16,20 @@ export function useAuth() {
         }),
       });
 
+      console.log("Respuesta del backend:", response);
+
       if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error del servidor:", errorData);
         throw new Error("Error al crear usuario");
       }
 
-      return await response.json();
+      const data = await response.json();
+      console.log("Usuario creado correctamente:", data);
+      return data;
     } catch (error) {
       console.error("Error en la creación del usuario:", error);
+      throw error;
     }
   };
 

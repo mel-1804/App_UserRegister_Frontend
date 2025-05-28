@@ -26,7 +26,7 @@ export const Navbar = () => {
         {/* LOGO---------------------------------------------------------------------------------------------------- */}
         <NavLink to="/home">
           {" "}
-          <div className="p-4 lg:px-7 transform transition-transform duration-300 hover:scale-105 cursor-pointer bg-stone-700 rounded-full w-1/3 border border-stone-300">
+          <div className="p-4 lg:px-7 transform transition-transform duration-300 hover:scale-105 cursor-pointer bg-stone-600 rounded-full w-1/3 border border-stone-300">
             <img className="" src={logo} alt="Logo" />
           </div>
         </NavLink>

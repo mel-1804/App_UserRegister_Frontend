@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { FormEdit } from "../components/forms/FormEdit";
+import { FormDeactivate } from "../components/forms/FormDeactivate";
 
 export const Home = () => {
   const [users, setUsers] = useState([]);
-  const [showForm, setShowForm] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
+  const [showDeactivateForm, setShowDeactivateForm] = useState(false);
 
   const fetchUsers = async () => {
     const token = localStorage.getItem("token");
@@ -35,12 +37,20 @@ export const Home = () => {
     fetchUsers();
   }, []);
 
-  const handleToggleForm = () => {
-    setShowForm(!showForm);
+  const handleToggleEditForm = () => {
+    setShowEditForm(!showEditForm);
   };
 
-  const handleClose = () => {
-    setShowForm(false);
+  const handleToggleDeactivateForm = () => {
+    setShowDeactivateForm(!showDeactivateForm);
+  };
+
+  const handleCloseEdit = () => {
+    setShowEditForm(false);
+  };
+
+  const handleCloseDeactivate = () => {
+    setShowDeactivateForm(false);
   };
 
   return (
@@ -76,15 +86,36 @@ export const Home = () => {
 
         <div className="flex flex-col items-start gap-4">
           <button
-            onClick={handleToggleForm}
+            onClick={handleToggleEditForm}
             className="bg-sky-800 w-1/4 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded-full shadow-md"
           >
             Editar mis datos
           </button>
-          {showForm && (
+          {showEditForm && (
             <div className="fixed inset-0 bg-[rgba(0,0,0,0.5)] flex items-center justify-center z-50">
               <div className="bg-sky-100 rounded-xl shadow-xl p-6 w-1/2 relative">
-                <FormEdit onClose={handleClose} onUpdateSuccess={fetchUsers} />
+                <FormEdit
+                  onClose={handleCloseEdit}
+                  onUpdateSuccess={fetchUsers}
+                />
+              </div>
+            </div>
+          )}
+        </div>
+        <div className="flex flex-col items-start gap-4">
+          <button
+            onClick={handleToggleDeactivateForm}
+            className="bg-red-600 w-1/4 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded-full shadow-md"
+          >
+            Dar de baja usuario
+          </button>
+          {showDeactivateForm && (
+            <div className="fixed inset-0 bg-[rgba(0,0,0,0.5)] flex items-center justify-center z-50">
+              <div className="bg-sky-100 rounded-xl p-6 w-1/2 relative">
+                <FormDeactivate
+                  onClose={handleCloseDeactivate}
+                  onUpdateSuccess={fetchUsers}
+                />
               </div>
             </div>
           )}

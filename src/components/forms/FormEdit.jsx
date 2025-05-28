@@ -3,7 +3,7 @@ import { LoadingButton } from "../common/LoadingButton";
 import { IconEye } from "../common/IconEye.jsx";
 import PropTypes from "prop-types";
 
-export function FormEdit({ onClose }) {
+export function FormEdit({ onClose, onUpdateSuccess }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const currentUser = JSON.parse(localStorage.getItem("user"));
@@ -28,8 +28,6 @@ export function FormEdit({ onClose }) {
     }
 
     try {
-      console.log("Datos enviados:", updatedUser);
-
       const response = await fetch(
         `http://localhost:5004/updateUser/${currentUser.id}`,
         {
@@ -53,7 +51,8 @@ export function FormEdit({ onClose }) {
         localStorage.setItem("user", JSON.stringify(updatedCurrentUser));
 
         alert("Datos actualizados correctamente");
-        onClose();
+        onUpdateSuccess(); // Refresh List in Home
+        onClose(); // Close the form
       } else {
         setError(data.message || "Error al actualizar usuario");
       }
@@ -228,4 +227,5 @@ export function FormEdit({ onClose }) {
 
 FormEdit.propTypes = {
   onClose: PropTypes.func.isRequired,
+  onUpdateSuccess: PropTypes.func.isRequired,
 };
