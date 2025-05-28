@@ -1,37 +1,47 @@
 import { useEffect, useState } from "react";
+import { FormEdit } from "../components/forms/FormEdit";
 
 export const Home = () => {
   const [users, setUsers] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+
+  const fetchUsers = async () => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await fetch("http://localhost:5004/users", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          console.warn("Sesión expirada. Redirigiendo al login...");
+        }
+        throw new Error("Error en la respuesta del servidor");
+      }
+
+      const data = await response.json();
+
+      setUsers(data || []);
+    } catch (error) {
+      console.error("Error al obtener usuarios:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      const token = localStorage.getItem("token");
-
-      try {
-        const response = await fetch("http://localhost:5004/users", {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (!response.ok) {
-          if (response.status === 401) {
-            console.warn("Sesión expirada. Redirigiendo al login...");
-          }
-          throw new Error("Error en la respuesta del servidor");
-        }
-
-        const data = await response.json();
-
-        setUsers(data || []);
-      } catch (error) {
-        console.error("Error al obtener usuarios:", error);
-      }
-    };
-
     fetchUsers();
   }, []);
+
+  const handleToggleForm = () => {
+    setShowForm(!showForm);
+  };
+
+  const handleClose = () => {
+    setShowForm(false);
+  };
 
   return (
     <main className="flex flex-col justify-center p-20 bg-white rounded-xl font-quicksand">
@@ -44,6 +54,7 @@ export const Home = () => {
             <tr>
               <th className="border border-stone-400 px-4 py-2">Nombre</th>
               <th className="border border-stone-400 px-4 py-2">Correo</th>
+              <th className="border border-stone-400 px-4 py-2">Teléfono</th>
             </tr>
           </thead>
           <tbody className="text-black">
@@ -55,10 +66,29 @@ export const Home = () => {
                 <td className="border border-stone-400 px-4 py-2">
                   {user.email}
                 </td>
+                <td className="border border-stone-400 px-4 py-2">
+                  {user.cellphone}
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
+
+        <div className="flex flex-col items-start gap-4">
+          <button
+            onClick={handleToggleForm}
+            className="bg-sky-800 w-1/4 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded-full shadow-md"
+          >
+            Editar mis datos
+          </button>
+          {showForm && (
+            <div className="fixed inset-0 bg-[rgba(0,0,0,0.5)] flex items-center justify-center z-50">
+              <div className="bg-sky-100 rounded-xl shadow-xl p-6 w-1/2 relative">
+                <FormEdit onClose={handleClose} onUpdateSuccess={fetchUsers} />
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </main>
   );

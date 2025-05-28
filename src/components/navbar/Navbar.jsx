@@ -1,32 +1,15 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import iconUser from "../../assets/iconUser.svg";
+import logo from "../../assets/logo.svg";
 
 export const Navbar = () => {
   const navigate = useNavigate();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef(null);
   const [currentUser, setCurrentUser] = useState(null);
 
-  // Close the menu if you clic out of it
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setMenuOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const handleProfile = () => {
-    navigate("/profile");
-    setMenuOpen(false);
-  };
-
   const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     navigate("/login");
   };
 
@@ -43,41 +26,31 @@ export const Navbar = () => {
         {/* LOGO---------------------------------------------------------------------------------------------------- */}
         <NavLink to="/home">
           {" "}
-          <div className="p-2 lg:px-7 transform transition-transform duration-300 hover:scale-105 cursor-pointer">
-            <h1 className="text-white">Logo de la aplicacion</h1>
+          <div className="p-4 lg:px-7 transform transition-transform duration-300 hover:scale-105 cursor-pointer bg-stone-700 rounded-full w-1/3 border border-stone-300">
+            <img className="" src={logo} alt="Logo" />
           </div>
         </NavLink>
-        {/* USUARIO------------------------------------------------------------------------------------------------- */}
-        <div className="flex flex-row lg:mx-7 gap-4 items-center bg-sky-100 rounded-full px-4 py-3 shadow-lg transform transition-transform duration-300 hover:scale-105 cursor-pointer">
-          <div className="hidden md:flex gap-1 items-end text-stone-600">
+        {/* USER------------------------------------------------------------------------------------------------- */}
+        <div className="flex flex-row lg:mx-7 gap-4 items-center bg-sky-100 rounded-full px-4 py-3 shadow-lg">
+          <div className="md:flex gap-1 items-end text-stone-600">
             <span>Bienvenid@</span>
             <span className="font-semibold whitespace-nowrap ">
               {currentUser?.name} {currentUser?.lastName}{" "}
             </span>
           </div>
-          <div
-            className="w-16 h-16 rounded-full overflow-hidden border border-sky-700 bg-stone-400 flex items-center justify-center"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            <img className="text-gray-500 w-8 h-8" src={iconUser} alt="user" />
+          <div className="w-22 h-18 rounded-full border border-sky-700 bg-stone-400 flex items-center justify-center">
+            <img className="text-gray-500" src={iconUser} alt="user" />
           </div>
-          {/* MENU DESPLEGABLE------------------------------------------------------------------------------------------- */}
-          {menuOpen && (
-            <div className="absolute right-0 top-20 bg-white rounded-md shadow-md mt-2 z-50 w-40">
-              <button
-                onClick={handleProfile}
-                className="w-full text-left px-4 py-2 hover:bg-gray-200 transition-colors duration-200"
-              >
-                Perfil
-              </button>
-              <button
-                onClick={handleLogout}
-                className="w-full text-left px-4 py-2 hover:bg-gray-200 transition-colors duration-200"
-              >
-                Logout
-              </button>
-            </div>
-          )}
+          {/* LOGOUT------------------------------------------------------------------------------------------- */}
+
+          <div className="bg-stone-400 rounded-full text-xs text-stone-700">
+            <button
+              onClick={handleLogout}
+              className="p-2 hover:bg-stone-300 rounded-full border border-sky-700 transition-colors duration-200 transform transition-transform duration-300 hover:scale-105 cursor-pointer"
+            >
+              Cerrar Sesión
+            </button>
+          </div>
         </div>
       </main>
     </>
