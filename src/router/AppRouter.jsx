@@ -8,16 +8,16 @@ export const AppRouter = () => {
   return (
     <Router>
       <Routes>
-        {/* Rutas públicas */}
+        {/* Public routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/newUser" element={<NewUser />} />
 
-        {/* Rutas privadas con Sidebar */}
+        {/* Private routes */}
         <Route element={<PrivateRoutes />}>
           <Route path="/home" element={<Home />} />
         </Route>
 
-        {/* Redirección por defecto */}
+        {/*Default redirection */}
         <Route path="*" element={<Login />} />
       </Routes>
     </Router>
