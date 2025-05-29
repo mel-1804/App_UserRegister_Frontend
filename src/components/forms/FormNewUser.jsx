@@ -30,7 +30,6 @@ export function FormNewUser() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("handleSubmit llamado");
 
     if (userData.password.length < 6 || userData.password.length > 10) {
       setError("La contraseña debe tener entre 6 y 10 caracteres");

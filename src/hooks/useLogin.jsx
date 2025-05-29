@@ -5,8 +5,6 @@ export function useLogin() {
 
   const login = async (email, password) => {
     try {
-      console.log({ email, password });
-
       const response = await fetch("http://localhost:5004/login", {
         method: "POST",
         headers: {
