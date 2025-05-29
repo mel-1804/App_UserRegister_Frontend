@@ -110,7 +110,7 @@ export const FormDeactivate = ({ onClose }) => {
             Zona de peligro:
           </span>
           <span>
-            Con este botón eliminarás tu usuario de la base de datos, pero tu yo
+            Con este botón eliminarás tu usuario de la base de datos, pero tu y
             yo sabemos que por buenas prácticas eso no debería suceder. Lo
             correcto es Desactivar al Usuario, pero no borrar su información.
           </span>
