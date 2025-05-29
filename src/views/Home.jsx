@@ -33,10 +33,6 @@ export const Home = () => {
     }
   };
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-
   const handleToggleEditForm = () => {
     setShowEditForm(!showEditForm);
   };
@@ -52,6 +48,10 @@ export const Home = () => {
   const handleCloseDeactivate = () => {
     setShowDeactivateForm(false);
   };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   return (
     <main className="flex flex-col justify-center p-20 bg-white rounded-xl font-quicksand">

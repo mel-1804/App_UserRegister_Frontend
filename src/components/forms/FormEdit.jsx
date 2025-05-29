@@ -16,6 +16,7 @@ export function FormEdit({ onClose, onUpdateSuccess }) {
     setError(null);
 
     const form = e.target;
+    const token = localStorage.getItem("token");
 
     const updatedUser = {
       name: form.name.value,
@@ -34,7 +35,7 @@ export function FormEdit({ onClose, onUpdateSuccess }) {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(updatedUser),
         }

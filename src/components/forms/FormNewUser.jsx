@@ -6,7 +6,9 @@ import { LoadingButton } from "../common/LoadingButton";
 
 export function FormNewUser() {
   const { createUser } = useAuth();
-
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [userData, setUserData] = useState({
     rut: "",
     name: "",
@@ -15,10 +17,6 @@ export function FormNewUser() {
     cellphone: "",
     password: "",
   });
-
-  const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
