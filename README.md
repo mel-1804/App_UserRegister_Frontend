@@ -12,8 +12,11 @@ Esta aplicación ha sido desarrollada como una "prueba de admisión" para formar
 
 ## Cómo correr esta aplicación?
 
-1. Clonar el repositorio
-2. Instalar dependencias con `npm install`
+1. Clonar los repositorios de frontend y backend en ventanas separadas.
+   `git clone https://github.com/mel-1804/App_UserRegister_Frontend.git`
+   `git clone https://github.com/mel-1804/App_UserRegister_Backend.git`
+
+2. Instalar dependencias del frontend con `npm install`
 3. Ejecutar el frontend con `npm run dev`
 4. Ejecutar el backend con `python app.py`
 
