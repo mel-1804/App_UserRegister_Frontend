@@ -53,13 +53,16 @@ export const FormDeactivate = ({ onClose }) => {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch(`http://localhost:5004/user/${userId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `http://localhost:5004/deleteUser/${userId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Error al eliminar usuario");
